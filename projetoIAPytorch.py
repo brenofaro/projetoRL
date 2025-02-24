@@ -73,7 +73,7 @@ class DQNAgent:
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model = DQN(state_shape, num_actions).to(self.device)
         self.target_model = DQN(state_shape, num_actions).to(self.device)
-        self.target_model.load_state_dict(self.model.state_dict())  # Initialize target network
+        self.target_model.load_state_dict(self.model.state_dict())  # Inicializa o target model com os mesmos pesos
         self.optimizer = optim.Adam(self.model.parameters(), lr=learning_rate)
         self.memory = ReplayBuffer(memory_size)
         self.gamma = gamma
@@ -84,7 +84,7 @@ class DQNAgent:
         self.update_target_freq = update_target_freq
         self.train_step = 0
         self.num_actions = num_actions
-        self.loss_fn = nn.MSELoss() # Store the loss function
+        self.loss_fn = nn.MSELoss() # Salva o Loss
         self.episode_q_values = []  # Para a média dos Q-values
 
 
@@ -94,12 +94,12 @@ class DQNAgent:
         else:
             state = torch.FloatTensor(state).unsqueeze(0).to(self.device)
             q_values = self.model(state)
-            self.episode_q_values.append(q_values.mean().item())  # Store Q-values
+            self.episode_q_values.append(q_values.mean().item())  #  Salva o Q-value
             return q_values.argmax().item()
 
     def learn(self):
         if len(self.memory) < self.batch_size:
-            return None, None  # Return None for loss and mean_q
+            return None, None
 
         states, actions, rewards, next_states, dones = self.memory.sample(self.batch_size)
         states = states.to(self.device)
@@ -125,7 +125,7 @@ class DQNAgent:
         if self.epsilon > self.epsilon_min:
             self.epsilon *= self.epsilon_decay
 
-        return loss.item(), q_values.mean().item() # Return loss and mean_q
+        return loss.item(), q_values.mean().item()
 
     def save(self, filepath):
         torch.save(self.model.state_dict(), filepath)
@@ -154,7 +154,7 @@ def train_agent(env, agent, episodes=1000, save_freq=20, log_dir="tensorboardtes
 
         writer = create_writer (log_metrics=log_metrics, log_dir=log_dir)
         total_steps = 0
-        running_rewards = deque(maxlen=100)  # Para 
+        running_rewards = deque(maxlen=100) # Salvar as recompensas dos ultimos 100 episodios
 
         for episode in range(episodes):
             state, _ = env.reset()
@@ -200,18 +200,18 @@ def train_agent(env, agent, episodes=1000, save_freq=20, log_dir="tensorboardtes
                 total_steps += 1
 
 
-            # --- Metrics Calculation ---
+            # Calculo das métricas do episódio
             episode_duration = time.time() - episode_start_time
             steps_per_second = episode_steps / episode_duration
             running_rewards.append(episode_reward)
             running_mean_reward = np.mean(running_rewards)
             mean_reward_per_step = episode_reward / episode_steps if episode_steps > 0 else 0.0
 
-             # Calculate action distribution
+             # Calcular a ação média
             action_counts = np.bincount(episode_actions, minlength=agent.num_actions)
             avg_action = np.average(np.arange(agent.num_actions), weights=action_counts)
             if writer:
-                # Log episode metrics
+                # Salvar as métricas no tensorboard
                 writer.add_scalar("Episode_Reward/episode", episode_reward, episode)
                 writer.add_scalar("Running_Mean_Reward/episode", running_mean_reward, episode)
                 writer.add_scalar("Mean_Reward_Per_Step/episode", mean_reward_per_step, episode)
@@ -303,10 +303,10 @@ class DQN(nn.Module):
         return self.fc(x)
 
 class Agent:
-    def __init__(self, state_shape, num_actions, epsilon=0.05):  # Add epsilon parameter
+    def __init__(self, state_shape, num_actions, epsilon=0.05):
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model = DQN(state_shape, num_actions).to(self.device)
-        self.epsilon = epsilon  # Store epsilon
+        self.epsilon = epsilon
         self.num_actions = num_actions
 
     def load(self, filepath):
@@ -314,7 +314,7 @@ class Agent:
         self.model.eval()
 
     def choose_action(self, state):
-        if random.random() < self.epsilon:  # Epsilon-greedy
+        if random.random() < self.epsilon: # Escolha aleatória
             return random.randrange(self.num_actions)
         else:
             with torch.no_grad():
@@ -329,7 +329,7 @@ def preprocess_state(state):
     return state
 
 def run_agent(env, agent, model_path, episodes=10):
-    agent.load(model_path)  # Load the trained model
+    agent.load(model_path)  # Carregar o modelo treinado
     total_rewards = []
 
     for episode in range(episodes):
@@ -380,12 +380,12 @@ from ale_py import ALEInterface
 ale = ALEInterface()
 
 if __name__ == "__main__":
-    env = gym.make('ALE/SpaceInvaders-v5', render_mode="human") #Human render mode.
-    state_shape = (12, 84, 84)  # 4 frames * 3 channels (RGB)
+    env = gym.make('ALE/SpaceInvaders-v5', render_mode="human")
+    state_shape = (12, 84, 84) 
     num_actions = env.action_space.n
 
     agent = Agent(state_shape, num_actions)
-    model_file = "dqn_model_episode_2440.pth"  # Replace with your model's filename
+    model_file = "dqn_model_episode_2440.pth" # Carregar o modelo treinado
     run_agent(env, agent, model_file, episodes=5)
 
 
