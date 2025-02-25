@@ -3,7 +3,14 @@ Projeto de aprendizado por reforço utilizando o pytorch para treinar um agente 
 
 Feito usando os conceitos de DQN e CNN.
 
-## Windowns
+Integrantes do grupo:
+BRENNO DE FARO VIEIRA
+DAVI SOUZA FONTES SANTOS
+HUMBERTO DA CONCEIÇÃO JÚNIOR
+RAFAEL NASCIMENTO ANDRADE
+NEWTON SOUZA SANTANA JÚNIOR
+
+## Executando o projeto
 ### Baixar e instalar o miniconda
 1. Baixar o miniconda (QuickStart install) no site [Miniconda Install](https://docs.anaconda.com/miniconda/install/)
 
@@ -39,7 +46,7 @@ pip install ipykernel
 python -m ipykernel install --user --name=env
 ```
 
-### Execução do código
+### Execução do código usando jupyter + vs code
 1. Clonar o repositório
 ```bash
 git clone https://github.com/brenofaro/projetoRL.git
@@ -53,3 +60,5 @@ code .
 - [Jupyter](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter)
 
 4. Selecionar o kernel do ambiente conda
+
+Por fim, executar o jupyter notebook projetoIAPytorch.ipynb
