@@ -1,14 +1,14 @@
 # Projeto de Aprendizado por Reforço com Pytorch
-Projeto de aprendizado por reforço utilizando o pytorch para treinar um agente para jogar o jogo de atari space invaders.
+Projeto de aprendizado por reforço utilizando o pytorch para treinar um agente para jogar o jogo de atari **Space Invaders.**
 
-Feito usando os conceitos de DQN e CNN.
+Feito usando os conceitos de **DQN** e **CNN**.
 
-Integrantes do grupo:
-BRENNO DE FARO VIEIRA
-DAVI SOUZA FONTES SANTOS
-HUMBERTO DA CONCEIÇÃO JÚNIOR
-RAFAEL NASCIMENTO ANDRADE
-NEWTON SOUZA SANTANA JÚNIOR
+Integrantes do grupo:  
+BRENNO DE FARO VIEIRA  
+DAVI SOUZA FONTES SANTOS  
+HUMBERTO DA CONCEIÇÃO JÚNIOR  
+RAFAEL NASCIMENTO ANDRADE  
+NEWTON SOUZA SANTANA JÚNIOR  
 
 ## Executando o projeto
 ### Baixar e instalar o miniconda
